@@ -10,5 +10,7 @@ include_once "Ejer2.php";
 include_once "Ejer3.php";
 include_once "Ejer4.php";
 include_once "Ejer5.php";
+include_once "Ejer6.php";
+include_once "Ejer7.php";
 
 ?>

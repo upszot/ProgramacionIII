@@ -1,16 +1,33 @@
 <?php
 //ejercicio 6
-$Ap6='Aplicación No 6 (Calculadora)
-Escribir un programa que use la variable $operador​ que pueda almacenar los símbolos
-matemáticos: ‘​ + ’ ​ , ‘​ -​ ’, ‘​ / ’ ​ y ‘​ * ’ ​ ; y definir dos variables enteras ​ $op1​ y ​ $op2​ . De acuerdo al
-símbolo que tenga la variable $operador, deberá realizarse la operación indicada y mostrarse el
-resultado por pantalla.';
+echo "</br></br><strong>$Ap6</strong></br>";
 
-$operador="+";
+//$operador="+";
+$operador=(string) $_GET["Oper"];
 $op1=2;
 $op2=3;
 
-select case '$operador':
-	# code...
+switch ($operador)
+{
+	case "+":
+		echo "suma";
+		$rta=$op1+$op2;
 	break;
+	case "-":
+		echo "resta";
+		$rta=$op1-$op2;
+	break;	
+	case "/":
+		echo "division";
+		if($op2===0)
+			$rta=$op1/$op2;
+		else
+			echo "no se puede dividir por 0";
+	break;
+	case "*":
+		echo "multiplicacion";
+		$rta=$op1*$op2;
+	break;		
+}
+echo "</br>RTA= $rta";
 ?>
