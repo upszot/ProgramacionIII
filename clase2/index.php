@@ -9,7 +9,7 @@ require_once "Guia_PHP_Clase2.php";
 require_once "conteiner.php";			  
 require_once "producto.php";
 
-$miC=new conteiner();
+$miC=new conteiner(100);
 $miP=new producto();
 
 echo "$Enunciado.<br>";

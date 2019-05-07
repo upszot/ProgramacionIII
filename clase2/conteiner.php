@@ -8,9 +8,9 @@ class conteiner
 	private $_capacidad;
 	private $_listadoProductos;
 
-	public function __construct() 
+	public function __construct($id) 
 	{ // código 
-		$this->_id=1;
+		$this->_id=$id;
 		$this->_tamanio=1;
 		$this->_capacidad=1000;
 		$this->_listadoProductos= array();
