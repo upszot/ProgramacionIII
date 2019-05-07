@@ -21,8 +21,13 @@ class producto
 
 	public function mostrar()
 	{
-		
-		echo "<br> ID: $this->_id <br> NOMBRE: $this->_nombre <br> IMPORTADOR: $this->_importador <br> PAIS DE ORIGEN: $this->_paisOrigen <br> KILOS: $this->_kilos <br>";
+		echo "<br><br>PRODUCTO: <br>";
+		echo "<br> ID: $this->_id <br> NOMBRE: $this->_nombre <br> IMPORTADOR: $this->_importador <br> PAIS DE ORIGEN: $this->_paisOrigen <br> KILOS: ".$this->getKilos()." <br>";
+	}
+
+	public function getKilos()
+	{
+		return $this->_kilos;
 	}
 
 }

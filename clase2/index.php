@@ -16,4 +16,9 @@ echo "$Enunciado.<br>";
 $miC->mostrar();
 $miP->mostrar();
 
+echo "<br>--------------<br>";
+$miC->agregarProducto($miP);
+$miC->agregarProducto($miP);
+
+$miC->mostrar();
 ?>
