@@ -13,8 +13,8 @@ $miC=new conteiner(100);
 $miP=new producto();
 
 echo "$Enunciado.<br>";
-$miC->mostrar();
-$miP->mostrar();
+//$miC->mostrar();
+//$miP->mostrar();
 
 echo "<br>--------------<br>";
 $miC->agregarProducto($miP);
