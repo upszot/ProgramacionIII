@@ -8,8 +8,6 @@ class Vehiculo
 	private $importe;
 	
 
-
-
 	public function __construct($patente,$ingreso,$importe) 	
 	{ // código 
 		$this->patente=(string)$patente;
@@ -32,9 +30,27 @@ class Vehiculo
 			$auto=new Vehiculo($arrayDatos[0], $arrayDatos[1], $arrayDatos[2]);
 			array_push($retorno, $auto);
 
-			echo "<br/>";
+			#echo "<br/>";
 		}
 		fclose($archivo);
+		return $retorno;
+	}
+
+	public static function guardar($vector,$ruta)
+	{		
+		$archivo=fopen($ruta,"a");
+		$renglon= "\n".implode(",", $vector->toArray());
+		fputs($archivo, $renglon);
+		fclose($archivo);
+	}
+
+	public function toArray()
+	{
+		$retorno=array();
+		array_push($retorno, $this->patente);
+		array_push($retorno, $this->ingreso);
+		array_push($retorno, $this->importe);
+		
 		return $retorno;
 	}
 

@@ -1,10 +1,12 @@
 <?php 
 require_once "Vehiculo.php";
-Vehiculo::leer("Vehiculo.txt");
-echo "------- Leidos ---------";
+
+
+#Vehiculo::leer($RUTA);
+echo "------- Leidos ---------<br>";
 
 $vehiculos = array();
-$vehiculos = Vehiculo::leer("Vehiculo.txt");
+$vehiculos = Vehiculo::leer($RUTA);
 
 	foreach ($vehiculos as $unAuto)
 	{
