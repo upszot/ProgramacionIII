@@ -15,7 +15,7 @@ class ManejadorDeArchivos
 	{
 		copy($Origen,"backup/".pathinfo($Origen,PATHINFO_FILENAME)."_".date("ymhi").".".pathinfo($Origen,PATHINFO_EXTENSION));
 	}
-	
+
 	public static function agregarMarcaDeAgua($archivo, $marcaAgua)
 	{
 		$im = imagecreatefrompng($archivo);
