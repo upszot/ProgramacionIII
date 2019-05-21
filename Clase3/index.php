@@ -10,10 +10,30 @@ switch ($metodo) {
 		# traer datos
 		echo "por get";
 		// require_once "traerVehiculo.php";
-		if($_GET["quehacer"]=="traertodos")
+
+		switch ($_GET["accion"])
 		{
-			//lala
+			/*caso 3 por GET:Se pide los estacionados y se muestra el listado .*/
+			case "estacionados":
+				require_once("Estacionamiento.php");
+				Estacionamiento::mostrarEstacionadosCSV();
+				echo "<br>";
+				Estacionamiento::mostrarEstacionadosJSON();
+				echo "<br>";
+				Estacionamiento::mostrarEstacionadosArrayJSON();
+				break;
+
+			/*caso 4 por GET:Se pide los facturados, mostrando todos los datos y la suma total facturada*/
+			case "facturados":
+				require_once("Estacionamiento.php");
+				Estacionamiento::mostrarFacturadosCSV();
+				echo "<br>";
+				Estacionamiento::mostrarFacturadosJSON();
+				echo "<br>";
+				Estacionamiento::mostrarFacturadosArrayJSON();
+				break;
 		}
+		
 		break;
 	case 'POST':
 		# altas
