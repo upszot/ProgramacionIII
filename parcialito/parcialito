@@ -1,0 +1,40 @@
+#temas de parcial
+archivo index.php que recibe todas las llamadas y de ahi llama al metodo
+
+1. POST  -> HeladoCarga.php
+	- Se ingresa sabor, precio, tipo (crema, agua), cantidad kilos
+	- Se guardan los datos tomando el sabor y tipo como identificador.
+	- Si existe acumula
+
+2. GET 	-> ConsultarHelado.php
+	- Se ingresa tipo y sabor, si existe devuelve un "Si Hay".
+	- Si "No Hay" sabor.., tiene que decir que hay de crema pero no de agua... etc.
+
+
+Todo eso se guarda en Helado.txt o json o csv
+
+3. POST	-> AltaVenta se guarda en ventas.txt
+	- Pide sabor, tipo, kg
+	- descontamos stock
+	- si no alcanza se informa cantidad disponible.
+
+4. POST	-> AltaConImagenes Guarda una imagen con la fecha de la venta.
+	- Pide sabor, tipo, kg (la de arriba mas la imagen.)
+	- sabor_fecha.png
+	- Tambien guarda la venta en ventas.txt
+
+5. 	GET	-> Listado filtrado por tipo o sabor de ventas.txt
+	- Trae la foto
+
+6. 	PUT -> Modificar HeladoCarga.php 
+	- Busca por sabor y tipo, y modificas precio y cantidad.
+
+7. 	POST ->	Alta Helado con fotos
+		/fotosHelados
+
+8.	DELETE	-> 	Eliminas por tipo y sabor.
+		/BackupDeFotos
+
+
+------------------------
+Postman Version 5.5.4
