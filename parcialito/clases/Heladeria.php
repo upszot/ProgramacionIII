@@ -133,7 +133,9 @@ class Heladeria
                 break;
             case 'agua':
                 $tipoContrario='crema';
-                break;                
+                break;
+            default:
+            $tipoContrario='tipo incorrecto';
         }
         return $tipoContrario;
     }
@@ -141,24 +143,36 @@ class Heladeria
     public static function BuscaSaborTipoHelado($sabor, $tipo)
     {
         global $PATH_ARCHIVOS;
+        $Flag=0;
         $lista = self::LeerJSON("$PATH_ARCHIVOS/helados.txt", "helado");
         foreach ($lista as $helado) {
-            if ($helado->getSabor() == $sabor) {                
+            if ($helado->getSabor() == $sabor) 
+            {                
                 if($helado->getTipo() == $tipo)
                 {//existe sabor y tipo
-                    echo "<font size='3' color='blue'  face='verdana' style='font-weight:bold' <br>Existe el tipo y sabor: <br> </font>";
+                    $Flag=1;
                 }
                 else
                 {//existe solo el sabor buscado
-                    echo "<font size='3' color='blue'  face='verdana' style='font-weight:bold' <br>Existe sabor buscado pero solo tenemos de " . self::getTipoContrario($tipo) . ": <br> </font>";
+                    $Flag=2;
                 }
                 break;
             }
-            else
-            {
-                echo "<font size='3' color='blue'  face='verdana' style='font-weight:bold' <br>Existe sabor buscado <br> </font>";
-            }
-        }       
+            
+        }
+        
+        switch($Flag)
+        {
+            case '0':
+                echo "<font size='3' color='black'  face='verdana' style='font-weight:bold' <br>NO tenemos ese sabor<br> </font>";            
+            break;
+            case '1':
+                echo "<font size='3' color='blue'  face='verdana' style='font-weight:bold' <br>Existe el tipo y sabor: <br> </font>";
+            break;
+            case '2':
+                echo "<font size='3' color='blue'  face='verdana' style='font-weight:bold' <br>Existe sabor buscado pero solo tenemos de " . self::getTipoContrario($tipo) . ": <br> </font>";            
+            break;
+        }
     }
 
     
@@ -228,20 +242,8 @@ class Heladeria
         echo $tipo;
         global $PATH_ARCHIVOS;
         $lista = self::LeerJSON("$PATH_ARCHIVOS/$tipos.s.txt", $tipo);
-        switch ($tipo) {
-            case 'helado':
-                //$lista = self::LeerJSON("$PATH_ARCHIVOS/$tipos.s.txt", "helado");
-                foreach ($lista as $objeto) {
-                    $objeto->MostrarHelado();
-                }
-                break;
-
-            case 'venta':
-                //$lista = self::LeerJSON("$PATH_ARCHIVOS/ventas.txt", "venta");
-                foreach ($lista as $objeto) {
-                    $objeto->MostrarCliente();
-                }
-                break;
+        foreach ($lista as $objeto) {
+            $objeto->Mostrar();
         }
     }
 
