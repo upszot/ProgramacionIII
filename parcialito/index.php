@@ -23,9 +23,14 @@
         case "GET":
              switch (key($_GET)) 
              {
-                case '<br>consultarHelados<br>':
-                require_once 'manejadores/ConsultarHelado.php';                     
-                break;
+                case 'consultarHelados':
+                    echo '<br>consultar Helados<br>';
+                    require_once 'manejadores/ConsultarHelado.php';
+                    break;
+                case 'listarVendidos':
+                    echo '<br>Listar Helados Vendidos - con foto<br>';
+                    require_once 'manejadores/ListarVendidosConFoto.php';
+                    break;
              }
              break;
         case "POST":

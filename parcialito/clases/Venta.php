@@ -21,11 +21,11 @@ class Venta
     }
 
     //GETTER && SETTERS
-    public function getsabor()
+    public function getSabor()
     {
         return $this->sabor;
     }
-    public function gettipo()
+    public function getTipo()
     {
         return $this->tipo;
     }
@@ -47,11 +47,11 @@ class Venta
     }
 
 
-    public function setsabor($var)
+    public function setSabor($var)
     {
         $this->sabor = $var;
     }
-    public function settipo($var)
+    public function setTipo($var)
     {
         $this->tipo = $var;
     }

@@ -204,8 +204,8 @@ class Heladeria
                     }
                     break;
                 case 'venta':
-                    if (!($key->getsabor() == '' || $key->getsabor() == '\n')) {
-                        $array = array('sabor' => $key->getsabor(), 'tipo' => $key->gettipo(),'cliente' => $key->getCliente(), 'precio' => $key->getPrecio(), 'cantidadKg' => $key->getcantidadKg(),'NomfotoHelado' => $key->getNomfotoHelado() );
+                    if (!($key->getSabor() == '' || $key->getSabor() == '\n')) {
+                        $array = array('sabor' => $key->getSabor(), 'tipo' => $key->getTipo(),'cliente' => $key->getCliente(), 'precio' => $key->getPrecio(), 'cantidadKg' => $key->getcantidadKg(),'NomfotoHelado' => $key->getNomfotoHelado() );
                         array_push($listado, $array);
                         fputs($archivo,  json_encode($array) . PHP_EOL);
                     }
@@ -235,7 +235,7 @@ class Heladeria
                     }
                     break;
                 case 'venta':
-                    if (!($objeto->getnombre() == '' || $objeto->getnombre() == '\n' || $objeto->getnombre() == ',')) {
+                    if (!($objeto->getSabor() == '' || $objeto->getSabor() == '\n' || $objeto->getSabor() == ',')) {
                         $aux = implode(',', $objeto->toArray());
                         fputs($archivo,  $aux);
                     }
@@ -306,6 +306,76 @@ class Heladeria
         return $lista;
     }
     
+    public static function ListarVendidos($sabor, $tipo)
+    {
+        global $PATH_ARCHIVOS;
+        $lista=self::LeerJSON("$PATH_ARCHIVOS/ventas.txt", "venta");
+
+/*         echo "<br> lista ventas <br>";
+        var_dump($lista); */
+
+        $strHtml=self::crearTablaHeader($lista);
+ 
+        foreach ($lista as $objeto) 
+        {
+            if ($objeto->getSabor() == $sabor || $objeto->getTipo() == $tipo) 
+            {
+                //mostrar venta...
+                $strHtml.= "<tr>";
+                $strHtml.= "<td>".$objeto->getSabor()."</td>";
+                $strHtml.= "<td>".$objeto->getTipo()."</td>";
+                $strHtml.= "<td>".$objeto->getCliente()."</td>";
+                $strHtml.= "<td>".$objeto->getPrecio()."</td>";
+                $strHtml.= "<td>".$objeto->getcantidadKg()."</td>";
+                $strHtml.= "<td>".$objeto->getNomfotoHelado()."</td>";
+            }
+        } 
+
+
+        $strHtml.="</tbody>";
+        $strHtml.="</table>";
+        echo $strHtml;
+    }
+    
+    public static function crearTablaHeader($lista)
+    {
+        $strHtml="<table border='1'>";
+        $strCabeceras = reset($lista);
+        $strHtml.="<th>SABOR</th>";
+        $strHtml.="<th>TIPO</th>";
+        $strHtml.="<th>CLIENTE</th>";
+        $strHtml.="<th>PRECIO</th>";
+        $strHtml.="<th>CANTIDAD</th>";
+        $strHtml.="<th>FOTO</th>";
+        $strHtml.="<tbody>";
+        
+        return $strHtml;
+        
+    }
+    public static function crearTabla($cant,$img,$objeto)
+    {
+
+        $var = "./fotosHelados/" . $helado->getSabor() . $helado->getTipo() . ".png";
+        echo "<tr>
+                <table>
+                <tr>
+                <th><img src=" . $var . " alt=" . " border=3 height=30% width=30%></img></th>
+                </tr>                
+                <tr>
+                <th>".$helado->getSabor()."</th>
+                </tr>                
+                <tr>
+                <th>".$helado->getTipo()."</th>
+                </tr>                
+                <th>".$helado->getPrecio()."</th>
+                </tr>                
+                <tr>
+                <th>".$helado->getCantidad()."</th>
+                </tr>                
+                </table> ";
+    }
+
+
     public static function AltaVenta($sabor, $tipo, $cantidad, $cliente, $foto)
     {
         global $PATH_ARCHIVOS;
