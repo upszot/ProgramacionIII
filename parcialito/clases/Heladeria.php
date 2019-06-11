@@ -68,19 +68,15 @@ class Heladeria
                     $objeto = json_decode($renglon);
                     switch ($tipo) {
                         case 'helado':
-                        if (isset($objeto)) {
-                            $helado = new Helado($objeto->sabor, $objeto->tipo,  $objeto->cantidad, $objeto->precio);
-                            array_push($listado, $helado);
-                        }
-                        break;
-                        
+                            if (isset($objeto)) {
+                                $helado = new Helado($objeto->sabor, $objeto->tipo,  $objeto->cantidad, $objeto->precio);
+                                array_push($listado, $helado);
+                            }
+                            break;                        
                         case 'venta':
-                        $venta=new Venta($objeto->sabor ,$objeto->tipo, $objeto->cliente , $objeto->precio, $objeto->cantidadKg, $objeto->NomfotoHelad);
-                        echo "<br>dentro del leer json<br>";
-                        var_dump($venta);
-                        echo "<br>------------------fin ----------<br>";
-                        array_push($listado, $venta);
-                        break;
+                            $venta=new Venta($objeto->sabor ,$objeto->tipo, $objeto->cliente , $objeto->precio, $objeto->cantidadKg, $objeto->NomfotoHelad);
+                            array_push($listado, $venta);
+                            break;
                     }
                 }
             }
@@ -210,8 +206,8 @@ class Heladeria
                     }
                     break;
                 case 'venta':
-                    if (!($key->getnombre() == '' || $key->getnombre() == '\n')) {
-                        $array = array('nombre' => $key->getnombre(), 'helado' => $key->gethelado(), 'precio' => $key->getPrecio(), 'cantidadKg' => $key->getcantidadKg());
+                    if (!($key->getsabor() == '' || $key->getsabor() == '\n')) {
+                        $array = array('sabor' => $key->getsabor(), 'tipo' => $key->gettipo(),'cliente' => $key->getCliente(), 'precio' => $key->getPrecio(), 'cantidadKg' => $key->getcantidadKg(),'NomfotoHelado' => $key->getNomfotoHelado() );
                         array_push($listado, $array);
                         fputs($archivo,  json_encode($array) . PHP_EOL);
                     }
@@ -316,11 +312,11 @@ class Heladeria
         $listaHelados = self::LeerJSON("$PATH_ARCHIVOS/helados.txt", "helado");
         //var_dump( $listaHelados);
         $helado=self::hayKilosHelado($listaHelados, $sabor, $tipo, $cantidad);
-        echo "sin entrar";
+        /* echo "sin entrar"; */
 
         if($helado!=null)
         {
-            echo "hay helado";
+            echo "<br>hay helado<br>";
             $helado->setCantidad($helado->getCantidad()-$cantidad);
             //$listaVentas=self::CargarVector("venta");
             $listaVentas=self::LeerJSON("$PATH_ARCHIVOS/ventas.txt", "venta");
@@ -333,16 +329,16 @@ class Heladeria
             }
 
             if ($foto != null) {
-                $NomfotoHelado="venta_$cliente_" . date("Ymd_His");
+                $NomfotoHelado="venta_$cliente"."_" . date("Ymd_His");
                 Upload::cargarImagenPorNombre($foto, $NomfotoHelado, "./fotosVentas/");
                 echo "no tomo la imagen";
             }
-            echo "<br>lista ventas -> antes de guardar <br>";
-            var_dump($listaVentas);
+/*             echo "<br>lista ventas -> antes de guardar <br>";
+            var_dump($listaVentas); */
             $venta=new Venta($helado->getSabor() ,$helado->getTipo(), $cliente , ($helado->getPrecio() * $cantidad) , $cantidad, $NomfotoHelado);
             array_push($listaVentas, $venta);
-            echo "<br>ventas->  antes de guardar <br>";
-            var_dump($listaVentas);
+/*             echo "<br>ventas->  antes de guardar <br>";
+            var_dump($listaVentas); */
             self::guardarJsonHeladeria($listaVentas, "$PATH_ARCHIVOS/ventas.txt", "venta");
             self::guardarJsonHeladeria($listaHelados, "$PATH_ARCHIVOS/helados.txt", "helado");
         }

@@ -1,1 +1,6 @@
-{"sabor":"coco","tipo":"crema","cliente":"lina","precio":"200","cantidadKg":"2","NomfotoHelado":"lalala"}
+{"sabor":"coco","tipo":"crema","cliente":"lina","precio":"200","cantidadKg":"2","NomfotoHelado":null}
+{"sabor":"chocolate","tipo":"crema","cliente":"pepe","precio":100,"cantidadKg":"1","NomfotoHelado":null}
+{"sabor":"chocolate","tipo":"crema","cliente":"pepe","precio":1000,"cantidadKg":"10","NomfotoHelado":null}
+{"sabor":"chocolate","tipo":"crema","cliente":"pepe","precio":1000,"cantidadKg":"10","NomfotoHelado":null}
+{"sabor":"chocolate","tipo":"crema","cliente":"pepe","precio":1000,"cantidadKg":"10","NomfotoHelado":null}
+{"sabor":"chocolate","tipo":"crema","cliente":"pepe","precio":1000,"cantidadKg":"10","NomfotoHelado":null}
