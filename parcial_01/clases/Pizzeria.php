@@ -1,6 +1,7 @@
 <?php
 require_once './clases/Pizza.php';
-
+require_once './clases/Venta.php';
+require_once './clases/upload.php';
 
 class Pizzeria
 {
@@ -17,8 +18,6 @@ class Pizzeria
             echo "<font size='3' color='red'  face='verdana' style='font-weight:bold' <br>Esta Pizza NO se Encuentra,Se agregara <br> </font>";
             $nuevoPizza = new Pizza($id, $sabor, $tipo, $cantidad, $precio);
             array_push($lista, $nuevoPizza);
-            echo "<br> lista: <br>";
-            var_dump($lista);
         //}
 /*         else
         {// Ya existe el Pizza, incrementar la cantidad
@@ -28,6 +27,53 @@ class Pizzeria
         self::guardarJSON($lista, "$PATH_ARCHIVOS/Pizza.txt", "Pizza");
     }
 
+
+    public static function hayStok($lista, $sabor, $tipo, $cantidad)
+    {
+        $retorno=null;
+        foreach ($lista as $objeto) 
+        {
+            if ($objeto->getSabor() == $sabor && $objeto->getTipo() == $tipo && $objeto->getCantidad() >= $cantidad) 
+            {
+                $retorno= $objeto;
+                echo "encontro el objeto";
+                break;
+            }
+        }
+        return $retorno;
+    }
+    
+    
+    public static function AltaVenta($sabor, $tipo, $cantidad, $email, $foto)
+    {
+        global $PATH_ARCHIVOS;
+
+        $listaPizzas = self::LeerJSON("$PATH_ARCHIVOS/Pizza.txt", "Pizza");
+        $Pizza=self::hayStok($listaPizzas, $sabor, $tipo, $cantidad);
+
+        if($Pizza!=null)
+        {
+            //echo "<br>hay Pizza<br>";
+            $Pizza->setCantidad($Pizza->getCantidad()-$cantidad);
+            $listaVentas=self::LeerJSON("$PATH_ARCHIVOS/Venta.txt", "Venta");
+
+            $Nomfoto = "SIN_FOTO";            
+/*             if ($Pizza->getCantidad() == 0) {
+                $key = (self::getExistePizzaKey($listaPizzas, $sabor, $tipo));
+                unset($listaPizzas[$key]);
+            } */
+
+            if ($foto != null) {
+                $NomfotoPizza="Venta_$email"."_" . date("Ymd_His");
+                Upload::cargarImagenPorNombre($foto, $Nomfoto, "./fotosVentas/");
+            }
+
+            $venta=new Venta($Pizza->getSabor() ,$Pizza->getTipo(), $email , $cantidad, $Nomfoto);
+            array_push($listaVentas, $venta);
+            self::guardarJSON($listaVentas, "$PATH_ARCHIVOS/Venta.txt", "Venta");
+            self::guardarJSON($listaPizzas, "$PATH_ARCHIVOS/Pizza.txt", "Pizza");
+        }
+    }
 
     public static function BuscaSaborTipo($sabor, $tipo)
     {
@@ -65,14 +111,14 @@ class Pizzeria
                 switch($cod)
                 {
                     case  0:
-                        $sms='NO tenemos ese sabor';
+                        $sms='NO existe el sabor buscado';
                         break;
                     case 1:
-                        $sms='Existe el tipo y sabor';
+                        $sms='Existe el sabor y tipo';
                         break;
                     case 2:
-                    //$sms='Existe sabor buscado pero solo tenemos de ' . self::getTipoContrario($tipo);
-                    break;
+                        $sms='existe sabor y pero no el tipo' ;
+                        break;                  
                 }
                 break;
             }
@@ -98,10 +144,12 @@ class Pizzeria
                                 array_push($listado, $Pizza);
                             }
                             break;                        
-/*                         case 'venta':
-                            $venta=new Venta($objeto->sabor ,$objeto->tipo, $objeto->cliente , $objeto->precio, $objeto->cantidadKg, $objeto->NomfotoPizza);
-                            array_push($listado, $venta);
-                            break; */
+                        case 'Venta':
+                            $venta = new Venta($objeto->sabor ,$objeto->tipo, $objeto->email , $objeto->cantidad, $objeto->Nomfoto);
+                            
+                            var_dump($venta);
+                            array_push($listado, $venta);             
+                            break;
                     }
                 }
             }
@@ -131,13 +179,13 @@ class Pizzeria
                         fputs($archivo,  json_encode($array) . PHP_EOL);
                     }
                     break;
-/*                 case 'venta':
+                case 'Venta':
                     if (!($key->getSabor() == '' || $key->getSabor() == '\n')) {
-                        $array = array('sabor' => $key->getSabor(), 'tipo' => $key->getTipo(),'cliente' => $key->getCliente(), 'precio' => $key->getPrecio(), 'cantidadKg' => $key->getcantidadKg(),'NomfotoHelado' => $key->getNomfotoHelado() );
+                        $array = array('sabor' => $key->getSabor(), 'tipo' => $key->getTipo(),'email' => $key->getemail(), 'cantidad' => $key->getCantidad(),'Nomfoto' => $key->getNomfoto() );
                         array_push($listado, $array);
                         fputs($archivo,  json_encode($array) . PHP_EOL);
                     }
-                    break; */
+                    break;
             }
         }
 

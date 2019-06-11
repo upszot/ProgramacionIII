@@ -37,7 +37,18 @@
                     echo "<br>Consultar Pizza<br>";
                     require_once 'manejadores/PizzaConsultar.php';
                     break;                        
-                    
+                case 'nuevaVenta':
+                    if (isset($_FILES["foto"]))
+                    {
+                        echo "<br>Alta Venta - Con Imagen<br>";
+                        require_once 'manejadores/AltaVentaConImagen.php';
+                    }                     
+                    else 
+                    {
+                        echo "<br>Alta Venta<br>";
+                        require_once 'manejadores/AltaVenta.php';
+                    }
+                    break;                      
             }// FIN switch (key($_POST))             
             break;
     } //FIN switch($metodo)    

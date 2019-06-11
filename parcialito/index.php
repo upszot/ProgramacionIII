@@ -47,17 +47,9 @@
                         require_once 'manejadores/HeladoCarga.php';
                     }
                     break;                    
-                case 'nuevaVenta':
-                    if (isset($_FILES["foto"]))
-                    {
-                        echo "<br>Venta Helado - Con Imagen<br>";
-                        require_once 'manejadores/AltaVentaConImagen.php';
-                    }                     
-                    else 
-                    {
-                        echo "<br>Venta Helado - Sin imagen<br>";
+                case 'nuevaVenta':                    
+                        echo "<br>Alta Venta<br>";
                         require_once 'manejadores/AltaVenta.php';
-                    }
                     break;               
             }// FIN switch (key($_POST))             
             break;

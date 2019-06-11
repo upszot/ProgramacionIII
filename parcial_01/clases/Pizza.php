@@ -12,7 +12,7 @@ class Pizza
     //Constructores
     function __construct($id, $sabor, $tipo, $cantidad, $precio)
     {
-        echo "<br> TIPO:  $tipo <br>";
+        //echo "<br> TIPO:  $tipo <br>";
         if($tipo== 'molde' || $tipo== 'piedra')
         {
             $this->id = $id;
