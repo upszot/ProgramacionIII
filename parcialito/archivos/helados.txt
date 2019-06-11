@@ -2,4 +2,4 @@
 {"sabor":"chocolate","tipo":"crema","precio":"100","cantidad":"310"}
 {"sabor":"coco","tipo":"crema","precio":"100","cantidad":"600"}
 {"sabor":"menta","tipo":"crema","precio":"30","cantidad":"40"}
-{"sabor":"Banana","tipo":"agua","precio":"15","cantidad":"250"}
+{"sabor":"Banana","tipo":"agua","precio":"25","cantidad":"350"}
