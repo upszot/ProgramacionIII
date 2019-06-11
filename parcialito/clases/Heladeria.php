@@ -426,7 +426,7 @@ class Heladeria
                     }
                     if ($helado->getCantidad() == 0) 
                     {
-                        $key = (self::existeHeladoKey($listaHelados, $sabor, $tipo));
+                        $key = (self::getExisteHeladoKey($listaHelados, $sabor, $tipo));
                         echo "<font size='3' color='red' face='verdana' style='font-weight:bold' <br>Archivo Eliminado <br> </font>";
                         unset($listaHelados[$key]);
                     }
