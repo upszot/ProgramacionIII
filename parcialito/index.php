@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Parcialito</title>
 </head>
 
 <body>
@@ -32,6 +32,21 @@
                     //echo "Alta Helado";
                     require_once 'manejadores/HeladoCarga.php';
                     break;
+                case 'nuevaVenta':
+                    if (isset($_FILES["foto"]))
+                    {
+                        echo "nueva Venta Con Imagen";
+                        require_once 'manejadores/AltaVentaConImagen.php';
+                        break;
+                    }                     
+                    else 
+                    {
+                        echo "nuevaVenta";
+                        require_once 'manejadores/AltaVenta.php';
+                        break;
+                    }
+                    break;
+                    
             }
             break;
 

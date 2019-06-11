@@ -1,2 +1,3 @@
-{"sabor":"agua","tipo":"Frutilla","precio":"100","cantidad":"2"}
-{"sabor":"chocolate","tipo":"crema","precio":"100","cantidad":"16"}
+{"sabor":"Frutilla","tipo":"agua","precio":"100","cantidad":"10"}
+{"sabor":"chocolate","tipo":"crema","precio":"100","cantidad":"99"}
+{"sabor":"coco","tipo":"crema","precio":"100","cantidad":"600"}
