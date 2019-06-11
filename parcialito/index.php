@@ -21,8 +21,9 @@
     switch ($metodo)
      {
         case "GET":
-             switch (key($_GET)) {
-                case 'consultarHelados':
+             switch (key($_GET)) 
+             {
+                case '<br>consultarHelados<br>':
                 require_once 'manejadores/ConsultarHelado.php';                     
                 break;
              }
@@ -31,33 +32,38 @@
             switch (key($_POST)) 
             {
                 case 'nuevoHelado':
-                    //echo "Alta Helado";
-                    require_once 'manejadores/HeladoCarga.php';
-                    break;
+                    if (isset($_FILES["foto"])) {
+                        echo "<br>Alta Helado Con foto<br>";
+                        require_once 'manejadores/AltaHeladoConFoto.php';                        
+                    }
+                    else
+                    {
+                        echo "<br>Alta Helado - Sin foto<br>";
+                        require_once 'manejadores/HeladoCarga.php';
+                    }
+                    break;                    
                 case 'nuevaVenta':
                     if (isset($_FILES["foto"]))
                     {
-                        echo "nueva Venta Con Imagen";
+                        echo "<br>Venta Helado - Con Imagen<br>";
                         require_once 'manejadores/AltaVentaConImagen.php';
-                        /* break; */
                     }                     
                     else 
                     {
-                        echo "nuevaVenta";
+                        echo "<br>Venta Helado - Sin imagen<br>";
                         require_once 'manejadores/AltaVenta.php';
-                       /*  break; */
                     }
-                    break;
-                    
-            }// FIN switch (key($_POST)) 
+                    break;               
+            }// FIN switch (key($_POST))             
             break;
-
         case "DELETE":
-            echo "delete";
+            echo "<br>Delete<br>";
+            require_once 'manejadores/borrarHelado.php';
             break;
 
         case "PUT":
-            echo "put";
+            echo "<br>Put<br>";
+            require_once 'manejadores/modificarHelado.php';
             break;
     } //FIN switch($metodo)    
 

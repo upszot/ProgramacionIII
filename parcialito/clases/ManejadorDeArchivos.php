@@ -46,9 +46,9 @@ class ManejadorDeArchivos
 		imagecopy($im, $estampa, imagesx($im) - $sx - $margen_dcho, imagesy($im) - $sy - $margen_inf, 0, 0, imagesx($estampa), imagesy($estampa));
 
 		// Imprimir y liberar memoria
-		header('Content-type: image/png');
+		//header('Content-type: image/png');
 		imagepng($im,$archivo);
-		imagedestroy($im);
+		//imagedestroy($im);
 
 	}
 

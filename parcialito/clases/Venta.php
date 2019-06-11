@@ -10,14 +10,14 @@ class Venta
     private $NomfotoHelado;
 
     //Constructores
-    function __construct($sabor ,$tipo, $cliente , $precio, $cantidadKg, $NomfotoHelado)
+    function __construct($Psabor ,$Ptipo, $Pcliente , $Pprecio, $PcantidadKg, $PNomfotoHelado)
     {
-        $this->sabor = $sabor;
-        $this->tipo = $tipo;
-        $this->cliente = $cliente;
-        $this->precio = $precio;
-        $this->cantidadKg = $cantidadKg;
-        $this->$NomfotoHelado = $NomfotoHelado;
+        $this->sabor = $Psabor;
+        $this->tipo = $Ptipo;
+        $this->cliente = $Pcliente;
+        $this->precio = $Pprecio;
+        $this->cantidadKg = $PcantidadKg;
+        $this->NomfotoHelado = $PNomfotoHelado;
     }
 
     //GETTER && SETTERS
