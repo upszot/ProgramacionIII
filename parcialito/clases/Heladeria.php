@@ -333,12 +333,14 @@ class Heladeria
                 Upload::cargarImagenPorNombre($foto, $NomfotoHelado, "./fotosVentas/");
                 echo "no tomo la imagen";
             }
-/*             echo "<br>lista ventas -> antes de guardar <br>";
-            var_dump($listaVentas); */
+            echo "<br>lista ventas -> antes de guardar <br>";
+            var_dump($listaVentas);
+            
             $venta=new Venta($helado->getSabor() ,$helado->getTipo(), $cliente , ($helado->getPrecio() * $cantidad) , $cantidad, $NomfotoHelado);
             array_push($listaVentas, $venta);
-/*             echo "<br>ventas->  antes de guardar <br>";
-            var_dump($listaVentas); */
+            echo "<br>ventas->  antes de guardar <br>";
+            var_dump($listaVentas);
+
             self::guardarJsonHeladeria($listaVentas, "$PATH_ARCHIVOS/ventas.txt", "venta");
             self::guardarJsonHeladeria($listaHelados, "$PATH_ARCHIVOS/helados.txt", "helado");
         }

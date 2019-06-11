@@ -4,3 +4,4 @@
 {"sabor":"chocolate","tipo":"crema","cliente":"pepe","precio":1000,"cantidadKg":"10","NomfotoHelado":null}
 {"sabor":"chocolate","tipo":"crema","cliente":"pepe","precio":1000,"cantidadKg":"10","NomfotoHelado":null}
 {"sabor":"chocolate","tipo":"crema","cliente":"pepe","precio":1000,"cantidadKg":"10","NomfotoHelado":null}
+{"sabor":"chocolate","tipo":"crema","cliente":"pepe","precio":1000,"cantidadKg":"10","NomfotoHelado":null}

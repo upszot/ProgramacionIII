@@ -18,7 +18,8 @@
 
     $metodo = $_SERVER['REQUEST_METHOD'];
     echo $metodo . "<br>";
-    switch ($metodo) {
+    switch ($metodo)
+     {
         case "GET":
              switch (key($_GET)) {
                 case 'consultarHelados':
@@ -27,7 +28,8 @@
              }
              break;
         case "POST":
-            switch (key($_POST)) {
+            switch (key($_POST)) 
+            {
                 case 'nuevoHelado':
                     //echo "Alta Helado";
                     require_once 'manejadores/HeladoCarga.php';
@@ -37,17 +39,17 @@
                     {
                         echo "nueva Venta Con Imagen";
                         require_once 'manejadores/AltaVentaConImagen.php';
-                        break;
+                        /* break; */
                     }                     
                     else 
                     {
                         echo "nuevaVenta";
                         require_once 'manejadores/AltaVenta.php';
-                        break;
+                       /*  break; */
                     }
                     break;
                     
-            }
+            }// FIN switch (key($_POST)) 
             break;
 
         case "DELETE":
