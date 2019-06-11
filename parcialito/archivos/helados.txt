@@ -1,5 +1,5 @@
 {"sabor":"Frutilla","tipo":"agua","precio":"100","cantidad":"110"}
 {"sabor":"chocolate","tipo":"crema","precio":"100","cantidad":"310"}
 {"sabor":"coco","tipo":"crema","precio":"100","cantidad":"600"}
-{"sabor":"chocolate con chispas","tipo":"crema","precio":"30","cantidad":"20"}
 {"sabor":"menta","tipo":"crema","precio":"30","cantidad":"40"}
+{"sabor":"Banana","tipo":"agua","precio":"30","cantidad":"100"}

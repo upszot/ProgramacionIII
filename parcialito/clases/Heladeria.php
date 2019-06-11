@@ -327,11 +327,17 @@ class Heladeria
                 $strHtml.= "<td>".$objeto->getCliente()."</td>";
                 $strHtml.= "<td>".$objeto->getPrecio()."</td>";
                 $strHtml.= "<td>".$objeto->getcantidadKg()."</td>";
-                $strHtml.= "<td>".$objeto->getNomfotoHelado()."</td>";
+                if($objeto->getNomfotoHelado()!="SIN_FOTO")
+                {
+                    $img="./fotosVentas/".$objeto->getNomfotoHelado().".png";
+                    $strHtml.= "<td><img src=" . $img . " alt=" . " border=3 height=30% width=30%></img></td>";
+                }
+                else
+                {// Buscar imagen que diga No Disponible
+                    $strHtml.= "<td>".$objeto->getNomfotoHelado()."</td>";
+                }
             }
         } 
-
-
         $strHtml.="</tbody>";
         $strHtml.="</table>";
         echo $strHtml;
@@ -349,30 +355,7 @@ class Heladeria
         $strHtml.="<th>FOTO</th>";
         $strHtml.="<tbody>";
         
-        return $strHtml;
-        
-    }
-    public static function crearTabla($cant,$img,$objeto)
-    {
-
-        $var = "./fotosHelados/" . $helado->getSabor() . $helado->getTipo() . ".png";
-        echo "<tr>
-                <table>
-                <tr>
-                <th><img src=" . $var . " alt=" . " border=3 height=30% width=30%></img></th>
-                </tr>                
-                <tr>
-                <th>".$helado->getSabor()."</th>
-                </tr>                
-                <tr>
-                <th>".$helado->getTipo()."</th>
-                </tr>                
-                <th>".$helado->getPrecio()."</th>
-                </tr>                
-                <tr>
-                <th>".$helado->getCantidad()."</th>
-                </tr>                
-                </table> ";
+        return $strHtml;        
     }
 
 

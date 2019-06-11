@@ -24,7 +24,7 @@ Todo eso se guarda en Helado.txt o json o csv
 	- sabor_fecha.png
 	- Tambien guarda la venta en ventas.txt
 
-5. 	GET	-> Listado filtrado por:				-> 
+5. 	GET	-> Listado filtrado por:				-> OK
 	- tipo o sabor de ventas.txt
 	- Trae la foto
 
