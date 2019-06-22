@@ -12,6 +12,7 @@
     
     <?php
     require_once './clases/Pizzeria.php';
+    require_once './clases/Generales.php';
    $PATH_ARCHIVOS = './archivos';
    $ID =0;
 
@@ -28,11 +29,24 @@
                     echo '<br>Cargar Pizza<br>';
                     require_once 'manejadores/PizzaCarga.php';
                     break;
+                
+                case 'pruebas':
+                    echo "BORRAR --- SOLO PARA PRUEBAS <br>";
+                    echo Generales::getUsuarioMail("popo@lala.com");
+                    echo Generales::getSubcadena("pepe@lala.com","@",1,true);
+                    break;
              }
              break;
         case "POST":
             switch (key($_POST)) 
             {
+                case 'PizzaCarga':
+                    if (isset($_FILES["foto"])) {
+                        echo "<br>Alta pizza Con foto<br>";
+                        require_once 'manejadores/AltaPizzaConFoto.php';                        
+                    }
+                    break;
+
                 case 'PizzaConsultar':                    
                     echo "<br>Consultar Pizza<br>";
                     require_once 'manejadores/PizzaConsultar.php';

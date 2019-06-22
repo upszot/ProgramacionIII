@@ -6,3 +6,5 @@
 {"sabor":"chocolate","tipo":"crema","cliente":"poo","precio":100,"cantidadKg":"1","NomfotoHelado":"venta_poo_20190611_030256"}
 {"sabor":"Banana","tipo":"agua","cliente":"Leo","precio":100,"cantidadKg":"1","NomfotoHelado":"venta_poo_20190611_031039"}
 {"sabor":"chocolate","tipo":"crema","cliente":"Pepe","precio":1000,"cantidadKg":"10","NomfotoHelado":"venta_pepe_20190611_033920"}
+{"sabor":"chocolate","tipo":"crema","cliente":"pepe","precio":100,"cantidadKg":"1","NomfotoHelado":"SIN_FOTO"}
+{"sabor":"chocolate","tipo":"crema","cliente":"pepe","precio":100,"cantidadKg":"1","NomfotoHelado":"SIN_FOTO"}

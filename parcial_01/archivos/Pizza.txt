@@ -1,4 +1,4 @@
-{"id":"0","sabor":"Peperoni","tipo":"molde","cantidad":"350","precio":"25"}
+{"id":"0","sabor":"Peperoni","tipo":"molde","cantidad":"346","precio":"25"}
 {"id":"1","sabor":"4quesos","tipo":"molde","cantidad":"350","precio":"25"}
 {"id":2,"sabor":"muzza","tipo":"piedra","cantidad":"10","precio":"100"}
 {"id":3,"sabor":"pepino","tipo":"piedra","cantidad":"100","precio":"10"}

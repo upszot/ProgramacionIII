@@ -5,6 +5,19 @@ require_once './clases/upload.php';
 
 class Pizzeria
 {
+
+    public static function existePizza($lista, $id)
+    {
+        $retorno=null;
+        foreach ($lista as $objeto) {
+            if ($objeto->getId() == id ) {                
+                $retorno= $objeto;
+                break;
+            }
+        }
+        return $retorno;
+    }
+
     public static function agregarPizza($sabor, $tipo, $cantidad, $precio)
     {        
         global $PATH_ARCHIVOS;
@@ -12,21 +25,43 @@ class Pizzeria
 
         $id=Pizza::siguienteId($lista);
 
-        //$Pizza = self::existePizza($lista, $sabor, $tipo);
+        $Pizza = self::existePizza($lista, $id);
 
-        //if ($Pizza == null) {
+        if ($Pizza == null) {
             echo "<font size='3' color='red'  face='verdana' style='font-weight:bold' <br>Esta Pizza NO se Encuentra,Se agregara <br> </font>";
             $nuevoPizza = new Pizza($id, $sabor, $tipo, $cantidad, $precio);
             array_push($lista, $nuevoPizza);
-        //}
-/*         else
+        }
+        else
         {// Ya existe el Pizza, incrementar la cantidad
             echo "<font size='3' color='red'  face='verdana' style='font-weight:bold' <br>Esta Pizza ya se Encuentra, Se incrementa la cantidad <br> </font>";
             $Pizza->setCantidad($Pizza->getCantidad()+$cantidad);
-        } */
+        }
         self::guardarJSON($lista, "$PATH_ARCHIVOS/Pizza.txt", "Pizza");
     }
 
+
+
+    public static function agregarPizzaFoto($sabor, $tipo, $cantidad, $precio, $foto)
+    {
+        global $PATH_ARCHIVOS;
+        $lista = self::LeerJSON("$PATH_ARCHIVOS/Pizza.txt", "Pizza");
+        $Pizza = self::existePizza($lista, $id);
+echo "<br>nombre archivo *************** <br>";
+            var_dump($lista);
+        if ($Pizza == null) {
+
+            $nuevoPizza = new Pizza($sabor, $tipo, $cantidad, $precio);
+
+            
+            array_push($lista, $nuevoPizza);
+        } else {
+            $Pizza->setCantidad($Pizza->getCantidad() + $cantidad);
+            echo "la nueva cantidad de Pizza es " . $Pizza->getCantidad();
+        }
+        Upload::cargarImagenPorNombre($fotoPizza, ($sabor ."_" . $tipo), "./fotosPizzas/");
+        self::guardarJSON($lista, "$PATH_ARCHIVOS/Pizza.txt", "Pizza");
+    }
 
     public static function hayStok($lista, $sabor, $tipo, $cantidad)
     {
@@ -63,8 +98,9 @@ class Pizzeria
                 unset($listaPizzas[$key]);
             } */
 
+            echo "<br>valor de email: $email<br>";
             if ($foto != null) {
-                $NomfotoPizza="Venta_$email"."_" . date("Ymd_His");
+                $Nomfoto="Venta_$email"."_" . date("Ymd_His");
                 Upload::cargarImagenPorNombre($foto, $Nomfoto, "./fotosVentas/");
             }
 
