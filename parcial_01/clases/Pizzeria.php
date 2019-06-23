@@ -6,12 +6,27 @@ require_once './clases/upload.php';
 class Pizzeria
 {
 
-    public static function existePizza($lista, $id)
+    public static function existePizza($lista, $sabor, $tipo)
     {
         $retorno=null;
         foreach ($lista as $objeto) {
-            if ($objeto->getId() == id ) {                
+            if ( $objeto->getSabor() == $sabor && $objeto->getTipo() == $tipo) 
+            {                
                 $retorno= $objeto;
+                break;
+            }
+        }
+        return $retorno;
+    }
+
+
+    public static function getExistePizzaKey($lista, $sabor, $tipo)
+    {//recorre la lista y donde encuentra devuelve la posicion
+        $retorno = null;
+        foreach ($lista as $key => $objeto) {
+            if ($objeto->getSabor() == $sabor && $objeto->getTipo() == $tipo) 
+            {
+                $retorno = $key;
                 break;
             }
         }
@@ -21,14 +36,12 @@ class Pizzeria
     public static function agregarPizza($sabor, $tipo, $cantidad, $precio)
     {        
         global $PATH_ARCHIVOS;
-        $lista = self::LeerJSON("$PATH_ARCHIVOS/Pizza.txt", "Pizza");
-
-        $id=Pizza::siguienteId($lista);
-
-        $Pizza = self::existePizza($lista, $id);
-
+        $lista = self::LeerJSON("$PATH_ARCHIVOS/Pizza.txt", "Pizza");        
+        $Pizza = self::existePizza($lista, $sabor, $tipo);
+        
         if ($Pizza == null) {
             echo "<font size='3' color='red'  face='verdana' style='font-weight:bold' <br>Esta Pizza NO se Encuentra,Se agregara <br> </font>";
+            $id=Pizza::siguienteId($lista);
             $nuevoPizza = new Pizza($id, $sabor, $tipo, $cantidad, $precio);
             array_push($lista, $nuevoPizza);
         }
@@ -41,25 +54,74 @@ class Pizzeria
     }
 
 
+    public static function modificarPizza($_PUT)
+    {
+        global $PATH_ARCHIVOS;
+        if (isset($_PUT)) {
+            $sabor  = $_PUT["sabor"];
+            $tipo = $_PUT["tipo"];
+            $cantidad = $_PUT["cantidad"];
+            $precio = $_PUT["precio"];
+
+            $lista = self::LeerJSON("$PATH_ARCHIVOS/Pizza.txt", "Pizza");
+            $Pizza = self::existePizza($lista, $sabor, $tipo);
+            if ($Pizza == null) {
+                echo "<font size='3' color='red'  face='verdana' style='font-weight:bold' <br>Esta Pizza NO se Encuentra,Se agregara <br> </font>";
+                $id=Pizza::siguienteId($lista);
+                $nuevoPizza = new Pizza($id, $sabor, $tipo, $cantidad, $precio);
+                array_push($lista, $nuevoPizza);
+            }
+            else
+            {// Ya existe el Pizza, incrementar la cantidad
+                echo "<font size='3' color='red'  face='verdana' style='font-weight:bold' <br>Esta Pizza ya se Encuentra, Se incrementa la cantidad y modificara el precio<br> </font>";
+                $Pizza->setCantidad($Pizza->getCantidad()+$cantidad);
+                $Pizza->setPrecio($precio);
+            }
+            
+            self::guardarJSON($lista, "$PATH_ARCHIVOS/Pizza.txt", "Pizza");
+        }
+    }
+
+
+    public static function borrarPizza($_DELETE)
+    {
+        global $PATH_ARCHIVOS;
+        if (isset($_DELETE)) {
+            $sabor  = $_DELETE["sabor"];
+            $tipo = $_DELETE["tipo"];
+
+            $lista = self::LeerJSON("$PATH_ARCHIVOS/Pizza.txt", "Pizza");
+            $key = (self::getExistePizzaKey($lista, $sabor, $tipo));
+
+            if ($key != null) 
+            {
+                echo "<font size='3' color='red'  face='verdana' style='font-weight:bold' <br>Se encontro la Pizza, Se eliminara<br> </font>";
+                unset($lista[$key]);
+            }
+            else
+            {
+                echo "<font size='3' color='red'  face='verdana' style='font-weight:bold' <br>NO Se encontro la Pizza a eliminar<br> </font>";
+            }            
+            self::guardarJSON($lista, "$PATH_ARCHIVOS/Pizza.txt", "Pizza");
+        }
+    }
 
     public static function agregarPizzaFoto($sabor, $tipo, $cantidad, $precio, $foto)
     {
         global $PATH_ARCHIVOS;
         $lista = self::LeerJSON("$PATH_ARCHIVOS/Pizza.txt", "Pizza");
-        $Pizza = self::existePizza($lista, $id);
-echo "<br>nombre archivo *************** <br>";
-            var_dump($lista);
+        $Pizza = self::existePizza($lista, $sabor, $tipo);
+
         if ($Pizza == null) {
-
-            $nuevoPizza = new Pizza($sabor, $tipo, $cantidad, $precio);
-
-            
+            $id=Pizza::siguienteId($lista);
+            $nuevoPizza = new Pizza($id,$sabor, $tipo, $cantidad, $precio);            
             array_push($lista, $nuevoPizza);
         } else {
             $Pizza->setCantidad($Pizza->getCantidad() + $cantidad);
             echo "la nueva cantidad de Pizza es " . $Pizza->getCantidad();
         }
-        Upload::cargarImagenPorNombre($fotoPizza, ($sabor ."_" . $tipo), "./fotosPizzas/");
+
+        Upload::cargarImagenPorNombre($foto, ($sabor ."_" . $tipo), "./fotosPizzas/");
         self::guardarJSON($lista, "$PATH_ARCHIVOS/Pizza.txt", "Pizza");
     }
 
@@ -71,7 +133,7 @@ echo "<br>nombre archivo *************** <br>";
             if ($objeto->getSabor() == $sabor && $objeto->getTipo() == $tipo && $objeto->getCantidad() >= $cantidad) 
             {
                 $retorno= $objeto;
-                echo "encontro el objeto";
+                //echo "encontro el objeto";
                 break;
             }
         }
@@ -93,14 +155,16 @@ echo "<br>nombre archivo *************** <br>";
             $listaVentas=self::LeerJSON("$PATH_ARCHIVOS/Venta.txt", "Venta");
 
             $Nomfoto = "SIN_FOTO";            
-/*             if ($Pizza->getCantidad() == 0) {
+            /*  if ($Pizza->getCantidad() == 0) {
                 $key = (self::getExistePizzaKey($listaPizzas, $sabor, $tipo));
                 unset($listaPizzas[$key]);
             } */
 
-            echo "<br>valor de email: $email<br>";
+            //echo "<br>valor de email: $email<br>";
+
             if ($foto != null) {
-                $Nomfoto="Venta_$email"."_" . date("Ymd_His");
+                $usuario=Generales::getUsuarioMail($email);
+                $Nomfoto="Venta_".$tipo."_".$sabor."_".$usuario."_" . date("Ymd_His");
                 Upload::cargarImagenPorNombre($foto, $Nomfoto, "./fotosVentas/");
             }
 
@@ -183,7 +247,7 @@ echo "<br>nombre archivo *************** <br>";
                         case 'Venta':
                             $venta = new Venta($objeto->sabor ,$objeto->tipo, $objeto->email , $objeto->cantidad, $objeto->Nomfoto);
                             
-                            var_dump($venta);
+                            //var_dump($venta);
                             array_push($listado, $venta);             
                             break;
                     }

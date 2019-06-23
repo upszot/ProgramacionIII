@@ -19,14 +19,14 @@
     date_default_timezone_set('America/Argentina/Buenos_Aires');
 
     $metodo = $_SERVER['REQUEST_METHOD'];
-    echo $metodo . "<br>";
+    echo "Metodo= " . $metodo . "<br>";
     switch ($metodo)
      {
         case "GET":
              switch (key($_GET)) 
              {
                 case 'PizzaCarga':
-                    echo '<br>Cargar Pizza<br>';
+                    //echo '<br>(index) Cargar Pizza<br>';
                     require_once 'manejadores/PizzaCarga.php';
                     break;
                 
@@ -42,30 +42,43 @@
             {
                 case 'PizzaCarga':
                     if (isset($_FILES["foto"])) {
-                        echo "<br>Alta pizza Con foto<br>";
+                        //echo "<br>(index) Alta pizza Con foto<br>";
                         require_once 'manejadores/AltaPizzaConFoto.php';                        
                     }
                     break;
 
                 case 'PizzaConsultar':                    
-                    echo "<br>Consultar Pizza<br>";
+                    //echo "<br>(index) Consultar Pizza<br>";
                     require_once 'manejadores/PizzaConsultar.php';
                     break;                        
                 case 'nuevaVenta':
                     if (isset($_FILES["foto"]))
                     {
-                        echo "<br>Alta Venta - Con Imagen<br>";
+                        echo "<br>(index) Alta Venta - Con Imagen<br>";
                         require_once 'manejadores/AltaVentaConImagen.php';
                     }                     
                     else 
                     {
-                        echo "<br>Alta Venta<br>";
+                        //echo "<br>(index) Alta Venta<br>";
                         require_once 'manejadores/AltaVenta.php';
                     }
                     break;                      
             }// FIN switch (key($_POST))             
             break;
-    } //FIN switch($metodo)    
+
+        case "PUT":
+            //PizzaCargaPlus':
+            //echo '<br>(index) Cargar Pizza Pluz - PUT<br>';
+            require_once 'manejadores/PizzaCargaPlus.php';
+            break;
+
+        case "DELETE":
+            //echo "<br>(index) Borrar Pizza<br>";
+            require_once 'manejadores/borrarPizza.php';
+            break;
+
+
+        } //FIN switch($metodo)    
 
     ?>
 
