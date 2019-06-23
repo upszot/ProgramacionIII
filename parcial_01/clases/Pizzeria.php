@@ -94,9 +94,20 @@ class Pizzeria
             $key = (self::getExistePizzaKey($lista, $sabor, $tipo));
 
             if ($key != null) 
-            {
+            {// Elimina
                 echo "<font size='3' color='red'  face='verdana' style='font-weight:bold' <br>Se encontro la Pizza, Se eliminara<br> </font>";
                 unset($lista[$key]);
+
+                //moviendo la foto al backup
+                $archivoOriginal=$sabor ."_". $tipo . ".png";
+                $destino = "./fotosPizzas/".$archivoOriginal;                
+                $arrayDeDatos = explode('.', $archivoOriginal);
+                $nuevoDestino = "./backupFotos/" . $arrayDeDatos[0] . "_". date("Ymd_His") . ".$arrayDeDatos[1]"; 
+                
+                echo "NUEVO DESTINO $nuevoDestino";            
+                copy($destino, $nuevoDestino); //movemos ese archivo al nuevo destino
+            
+                unlink ($destino);                
             }
             else
             {
@@ -224,6 +235,38 @@ class Pizzeria
             }
             echo "<font size='3' color='black'  face='verdana' style='font-weight:bold' <br>$sms<br> </font>";
     }
+
+
+    public static function ListarPizzas($tipo)
+    {
+        $path_Borrado="./backupFotos/";
+        $path_cargadas="./fotosPizzas/";
+
+        switch ($tipo)
+        {
+           case "borrado":
+                $path=$path_Borrado;
+                break;            
+            case "cargadas":
+                $path=$path_cargadas;
+                break;                
+        }
+        
+        $arrayImagenes = scandir($path);
+        //var_dump($arrayImagenes); 
+        foreach ($arrayImagenes  as $file) 
+        {
+            if ($file != "." && $file != "..") 
+            {
+                if (file_exists($path.$file)) 
+                {
+                    $strHtml = "<img src=".$path. $file . " alt=" . " border=3 height=120px width=160px></img>";
+                    echo $strHtml;
+                }
+            }
+        }//FIN foreach ($arrayImagenes  as $file) 
+    }
+
 // ********** ARCHIVOS  ************
     public static function LeerJSON($nombreArchivo, $tipo)
     {

@@ -30,10 +30,9 @@
                     require_once 'manejadores/PizzaCarga.php';
                     break;
                 
-                case 'pruebas':
-                    echo "BORRAR --- SOLO PARA PRUEBAS <br>";
-                    echo Generales::getUsuarioMail("popo@lala.com");
-                    echo Generales::getSubcadena("pepe@lala.com","@",1,true);
+                case 'listado':
+                    echo "<br>(index) Listado<br>";
+                    require_once 'manejadores/ListadoDeImagenes.php';
                     break;
              }
              break;
