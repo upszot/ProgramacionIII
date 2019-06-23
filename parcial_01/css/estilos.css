@@ -1,0 +1,27 @@
+body {
+    //background-color: green;
+    font-size: 12pt;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+font {
+    size: '3';
+    //color: green;
+    font-family: 'verdana';
+    font-weight: bold'
+
+}
+
+.Alertas {
+    color: red;
+    size: '3';
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
+
+.sms {
+    color: blue;
+    size: '3';
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
