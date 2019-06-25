@@ -1,0 +1,2 @@
+{"alias":"pepe","tipo":"cajero","email":"pepe@gmail.com","edad":"30","Nomfoto":"SIN_FOTO"}
+{"alias":"frutilla","tipo":"panadero","email":"lala@gmail.com","edad":"40","Nomfoto":"frutilla_lala@gmail.com"}

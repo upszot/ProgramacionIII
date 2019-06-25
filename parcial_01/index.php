@@ -35,6 +35,13 @@
                     //echo "<div class='sms'> <br>(index) Listado<br></div>";
                     require_once 'manejadores/ListadoDeImagenes.php';
                     break;
+
+                case 'ListadoEmpleados':
+                    echo "<div class='sms'> <br>(index) Listado Empleados<br></div>";
+                    require_once 'manejadores/ListadoEmpleados.php';
+                    break;
+
+                    
              }
              break;
         case "POST":
@@ -46,7 +53,10 @@
                         require_once 'manejadores/AltaPizzaConFoto.php';                        
                     }
                     break;
-
+                case 'AltaEmpleado':                    
+                        echo "<br>(index) Alta Empleado<br>";
+                        require_once 'manejadores/AltaEmpleado.php';
+                    break;
                 case 'PizzaConsultar':                    
                     //echo "<br>(index) Consultar Pizza<br>";
                     require_once 'manejadores/PizzaConsultar.php';
@@ -72,6 +82,8 @@
             require_once 'manejadores/PizzaCargaPlus.php';
             break;
 
+
+            //empleadoDatos.php
         case "DELETE":
             //echo "<br>(index) Borrar Pizza<br>";
             require_once 'manejadores/borrarPizza.php';

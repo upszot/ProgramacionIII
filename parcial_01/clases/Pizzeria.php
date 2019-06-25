@@ -1,6 +1,7 @@
 <?php
 require_once './clases/Pizza.php';
 require_once './clases/Venta.php';
+require_once './clases/Empleado.php';
 require_once './clases/upload.php';
 
 class Pizzeria
@@ -150,7 +151,45 @@ class Pizzeria
         }
         return $retorno;
     }
-    
+
+    public static function ExisteEmpleado($lista,$alias)
+    {
+        $retorno=null;
+        foreach ($lista as $objeto) 
+        {
+            if ($objeto->getAlias() == $alias) 
+            {
+                $retorno= $objeto;
+                break;
+            }
+        }
+        return $retorno;
+    }
+
+    public static function AltaEmpleado($alias, $tipo, $edad, $email, $foto)
+    {
+        global $PATH_ARCHIVOS;
+
+        $lista = self::LeerJSON("$PATH_ARCHIVOS/Empleado.txt", "Empleado");
+        $Empleado=self::ExisteEmpleado($lista, $alias);
+
+        if($Empleado!=null)
+        {
+            echo "<br>El Empleado ya existe<br>";
+        }
+        else
+        {         
+            $Nomfoto = "SIN_FOTO"; 
+            if ($foto != null) {                
+                $Nomfoto=$alias."_".$email;
+                Upload::cargarImagenPorNombre($foto, $Nomfoto, "./fotosEmpleado/");
+            }
+
+            $Empleado=new Empleado($alias ,$tipo, $email , $edad, $Nomfoto);
+            array_push($lista, $Empleado);
+            self::guardarJSON($lista, "$PATH_ARCHIVOS/Empleado.txt", "Empleado");
+        }
+    }
     
     public static function AltaVenta($sabor, $tipo, $cantidad, $email, $foto)
     {
@@ -267,6 +306,64 @@ class Pizzeria
         }//FIN foreach ($arrayImagenes  as $file) 
     }
 
+
+    public static function ListarEmpleados($tipo)
+    {
+        global $PATH_ARCHIVOS;
+        $lista=self::LeerJSON("$PATH_ARCHIVOS/Empleado.txt", "Empleado");
+
+        $strHtml=self::crearTablaHeader($lista);
+ 
+        if($tipo == "foto" || $tipo == "sinfoto" || $tipo =="nombre")
+        {
+
+            foreach ($lista as $objeto) 
+            {
+                //mostrar venta...
+                $strHtml.= "<tr>";
+                $strHtml.= "<td>".$objeto->getAlias()."</td>";
+                if($tipo!="nombre")
+                {
+                    $strHtml.= "<td>".$objeto->getTipo()."</td>";
+                    $strHtml.= "<td>".$objeto->getEdad()."</td>";
+                    $strHtml.= "<td>".$objeto->getemail()."</td>";
+                    if($tipo=="foto")
+                    {
+                        $img="./fotosEmpleado/".$objeto->getNomfoto().".png";
+                        $strHtml.= "<td><img src=" . $img . " alt=" . " border=3 height=30% width=30%></img></td>";
+                    }
+                    else
+                    {// Buscar imagen que diga No Disponible
+                        $strHtml.= "<td> SIN FOTO</td>";
+                    }
+
+                }
+                
+            } // fin foreach
+            $strHtml.="</tbody>";
+            $strHtml.="</table>";
+            echo $strHtml;
+        }//if
+        else
+        {
+            echo "No hay opcion para eso";
+        }
+    }
+        
+    public static function crearTablaHeader($lista)
+    {
+        $strHtml="<table border='1'>";
+        $strCabeceras = reset($lista);
+        $strHtml.="<th>ALIAS</th>";
+        $strHtml.="<th>TIPO</th>";
+        $strHtml.="<th>EDAD</th>";
+        $strHtml.="<th>EMAIL</th>";
+        $strHtml.="<th>FOTO</th>";
+        $strHtml.="<tbody>";
+        
+        return $strHtml;        
+    }
+
 // ********** ARCHIVOS  ************
     public static function LeerJSON($nombreArchivo, $tipo)
     {
@@ -282,17 +379,20 @@ class Pizzeria
                     $objeto = json_decode($renglon);
                     switch ($tipo) {
                         case 'Pizza':
-                            if (isset($objeto)) {
+                            if (isset($objeto)) 
+                            {
                                 $Pizza = new Pizza($objeto->id, $objeto->sabor, $objeto->tipo,  $objeto->cantidad, $objeto->precio);
                                 array_push($listado, $Pizza);
                             }
                             break;                        
                         case 'Venta':
-                            $venta = new Venta($objeto->sabor ,$objeto->tipo, $objeto->email , $objeto->cantidad, $objeto->Nomfoto);
-                            
-                            //var_dump($venta);
+                            $venta = new Venta($objeto->sabor ,$objeto->tipo, $objeto->email , $objeto->cantidad, $objeto->Nomfoto);                            
                             array_push($listado, $venta);             
                             break;
+                        case 'Empleado':
+                            $Empleado = new Empleado($objeto->alias ,$objeto->tipo, $objeto->email , $objeto->edad, $objeto->Nomfoto);                            
+                            array_push($listado, $Empleado);             
+                            break;                            
                     }
                 }
             }
@@ -329,6 +429,12 @@ class Pizzeria
                         fputs($archivo,  json_encode($array) . PHP_EOL);
                     }
                     break;
+                case 'Empleado':
+                        $array = array('alias' => $key->getAlias(), 'tipo' => $key->getTipo(),'email' => $key->getemail(), 'edad' => $key->getEdad(),'Nomfoto' => $key->getNomfoto() );
+                        array_push($listado, $array);
+                        fputs($archivo,  json_encode($array) . PHP_EOL);
+                    
+                    break;                    
             }
         }
 
